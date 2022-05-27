@@ -1,0 +1,2 @@
+# Remove anoying Mac file that git doesn't autoignore 
+.DS_Store

@@ -5,21 +5,68 @@ Simple dotfiles that I use on my Mac laptop
 ## Requirements
 
 - brew
+- fig
 
-### brew packages
+### brew packages I have installed
 
+- autoconf
 - bat
+- ca-certificates
 - exa
+- gdbm
 - gh
+- go (optional)
 - jq
+- libssh2
+- m4
+-mpdecimal
+- ncurses
 - neofetch
-- pyenv
+- oniguruma
+- openssl@1.1
+- openssl@3
+- pcre
+- pkg-config
+- pyenv (optional)
 - readline
+- rust
+- screenresolution
+- sqlite
 - starship
+- tcl-tk
 - volta
 - xz
 - zlib
 - zsh
+
+### brew casks
+
+- alt-tab
+- anydesk
+- figma
+- google-chrome
+- google-cloud-sdk
+- iterm2
+- itsycal
+- keybase
+- raycast
+- scroll-reverser
+- slack
+- temurin (optional; JDK)
+
+### Other tools installed
+
+- JetBrains Toolbox (optional)
+- Docker
+- BetterDummy (optional)
+- TG Pro
+- Visual Studio Code & Visual Studio Code Insiders
+- Discord clients
+- Insomnia Rest client
+- Notion
+- iTerm2 (profile available in `iterm2_profile`)
+- Warp terminal
+- JetBrains Mono Nerd font
 
 ### Setting up zsh to use brew zsh instead of /usr/local/bin/zsh
 

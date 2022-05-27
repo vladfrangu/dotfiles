@@ -69,8 +69,8 @@ export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
 
 # Initialize gcloud-sdk completions if installed
 if [ "$(command -v gcloud)" ]; then
-	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # Replace ls
@@ -100,8 +100,10 @@ fi
 # Initialize starship
 eval "$(starship init zsh)"
 
-# Initialize pyenv
-eval "$(pyenv init -)"
+# Initialize pyenv if present
+if [ "$(command -v pyenv)" ]; then
+  eval "$(pyenv init -)"
+fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
