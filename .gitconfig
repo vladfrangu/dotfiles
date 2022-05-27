@@ -1,0 +1,47 @@
+[user]
+	email = kingdgrizzle@gmail.com
+	name = Vlad Frangu
+	# signingKey = <SETUP GPG AND DROP KEY IN HERE>
+
+[commit]
+	gpgsign = true
+
+[core]
+	autocrlf = input
+	editor = code-insiders --wait
+
+[diff]
+	tool = vscode
+
+[diftool "vscode"]
+	cmd = code-insiders --wait --diff $LOCAL $REMOTE
+
+[pull]
+	rebase = true
+
+[init]
+	defaultBranch = main
+
+[alias]
+	# Squash parameter given amount of commits
+	squash = "!f(){ git rebase -i HEAD~$1; }; f"
+	# Squash the amount of commits between HEAD and origin/main
+	squashdiff = !git rebase -i HEAD~$(git rev-list --count origin/main..$(git rev-parse --abbrev-ref HEAD))
+	# Quick access to commit allow empty
+	cie = commit --allow-empty
+	# Commit with whatthecommit
+	ciyolo = "!f() { response=$(curl -s http://whatthecommit.com/index.json); message=$(echo ${response} | jq -r '.commit_message'); link=$(echo ${response} | jq -r '.permalink'); git commit $@ -nam \"chore: $(echo ${message} | tr '[:upper:]' '[:lower:]')\" -m \"permalink: ${link}\"; }; f"
+	# Remove branches based on a pattern
+	br-delete-regex = "!f(){ git branch -D $(git branch | grep -E $1); }; f"
+	# Delete all local branches but main/aster and the current one, only if they are fully merged with main.
+	br-delete-useless = !git branch | grep -v "main" | grep -v "master" | grep -v ^* | xargs -r git branch -d
+	# Delete all local branches but main/master and the current one.
+	br-delete-useless-force = !git branch | grep -v "main" | grep -v "master" | grep -v ^* | xargs -r git branch -D
+	# Hard resets the local branch to the remote version. Warning: any changes comitted will be lost. This is a destructive command!
+	hardreset = "!f(){ read -n 1 -r -p 'Are you sure that you want to run git hardreset? [Y/n] '; echo; [[ $REPLY =~ ^[Yy]$ ]] && echo; git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); }; f"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
