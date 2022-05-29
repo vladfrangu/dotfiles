@@ -1,5 +1,6 @@
 # Fig pre block. Keep at the top of this file.
 . "$HOME/.fig/shell/zshrc.pre.zsh"
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -61,11 +62,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-export VOLTA_HOME="$HOME/.volta"
-export CARGO_HOME="$HOME/.cargo"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Initialize gcloud-sdk completions if installed
 if [ "$(command -v gcloud)" ]; then
