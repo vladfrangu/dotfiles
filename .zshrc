@@ -67,6 +67,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
 export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
 
 # Initialize gcloud-sdk completions if installed

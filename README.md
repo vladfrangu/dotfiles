@@ -19,7 +19,7 @@ Simple dotfiles that I use on my Mac laptop
 - jq
 - libssh2
 - m4
--mpdecimal
+- mpdecimal
 - ncurses
 - neofetch
 - oniguruma
@@ -29,7 +29,6 @@ Simple dotfiles that I use on my Mac laptop
 - pkg-config
 - pyenv (optional)
 - readline
-- rust
 - screenresolution
 - sqlite
 - starship
@@ -67,6 +66,7 @@ Simple dotfiles that I use on my Mac laptop
 - iTerm2 (profile available in `iterm2_profile`)
 - Warp terminal
 - JetBrains Mono Nerd font
+- rust via rustup
 
 ### Setting up zsh to use brew zsh instead of /usr/local/bin/zsh
 
