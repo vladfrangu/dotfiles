@@ -9,6 +9,7 @@
 [core]
 	autocrlf = input
 	editor = code-insiders --wait
+	excludesFile = ~/.gitignore
 
 [diff]
 	tool = vscode
