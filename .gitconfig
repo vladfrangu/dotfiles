@@ -15,7 +15,7 @@
 	tool = vscode
 
 [diftool "vscode"]
-	cmd = code-insiders --wait --diff $LOCAL $REMOTE
+	cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [pull]
 	rebase = true
@@ -46,3 +46,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[rebase]
+	autoStash = true

@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -67,8 +67,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
-export CARGO_HOME="$HOME/.cargo"
-export RUSTUP_HOME="$HOME/.rustup"
 export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
 
 # Initialize gcloud-sdk completions if installed
@@ -115,4 +113,4 @@ fi
 # For a full list of active aliases, run `alias`.
 
 # Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"

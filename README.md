@@ -12,7 +12,9 @@ Simple dotfiles that I use on my Mac laptop
 - autoconf
 - bat
 - ca-certificates
+- deno
 - exa
+- ffmpeg
 - gdbm
 - gh
 - go (optional)
@@ -34,6 +36,7 @@ Simple dotfiles that I use on my Mac laptop
 - starship
 - tcl-tk
 - volta
+- webp
 - xz
 - zlib
 - zsh
@@ -41,10 +44,14 @@ Simple dotfiles that I use on my Mac laptop
 ### brew casks
 
 - alt-tab
+- android-platform-tools
 - anydesk
+- dotnet-sdk
 - figma
-- google-chrome
+- gimp
+- google-chrome (used for development only, I use Google Chrome Dev instead)
 - google-cloud-sdk
+- hex-fiend
 - iterm2
 - itsycal
 - keybase
@@ -52,6 +59,7 @@ Simple dotfiles that I use on my Mac laptop
 - scroll-reverser
 - slack
 - temurin (optional; JDK)
+- transmission (or alternatively find and install qBitTorrent)
 
 ### Other tools installed
 
