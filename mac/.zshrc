@@ -90,7 +90,7 @@ fi
 # Replace cat
 if [ "$(command -v bat)" ]; then
 	unalias -m 'cat'
-	alias cat='bat -pp --theme="Monokai Extended Bright"'
+	alias cat='bat --theme="Monokai Extended Bright"'
 fi
 
 # Load Autocompletions
