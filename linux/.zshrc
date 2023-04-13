@@ -83,7 +83,7 @@ fi
 # Replace cat
 if [ "$(command -v batcat)" ]; then
   unalias -m 'cat'
-  alias cat='batcat -pp --theme="Monokai Extended Bright"'
+  alias cat='batcat --theme="Monokai Extended Bright"'
 fi
 
 # Initialize starship
