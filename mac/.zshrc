@@ -66,10 +66,17 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
+export PATH="$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
+
+# Bun completions
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+
+# code-server
+export EXTENSIONS_GALLERY='{"serviceUrl":"https://marketplace.visualstudio.com/_apis/public/gallery","cacheUrl":"https://vscode.blob.core.windows.net/gallery/index","itemUrl":"https://marketplace.visualstudio.com/items","controlUrl":"","recommendationsUrl":""}'
 
 # Initialize gcloud-sdk completions if installed
 if [ "$(command -v gcloud)" ]; then
@@ -109,10 +116,9 @@ if [ "$(command -v pyenv)" ]; then
 	eval "$(pyenv init -)"
 fi
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
+if [ "$(command -v github-copilot-cli)" ]; then
+	eval "$(github-copilot-cli alias -- "$0")"
+fi
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
