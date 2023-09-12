@@ -10,7 +10,7 @@ Simple dotfiles that I use on Linux VPS's
 - Install zsh, and other tools
 
 ```bash
-sudo apt install zsh bat exa starship
+sudo apt install zsh bat eza starship
 curl https://get.volta.sh | bash
 ```
 

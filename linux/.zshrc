@@ -71,13 +71,13 @@ if [ "$(command -v pyenv)" ]; then
 fi
 
 # Replace ls
-if [ "$(command -v exa)" ]; then
+if [ "$(command -v eza)" ]; then
 	unalias -m 'll'
 	unalias -m 'l'
 	unalias -m 'la'
 	unalias -m 'ls'
-	alias ls='exa -G  --color auto --icons -a -s type'
-	alias ll='exa -l --color always --icons -a -s type'
+	alias ls='eza -G  --color auto --icons -a -s type'
+	alias ll='eza -l --color always --icons -a -s type'
 fi
 
 # Replace cat

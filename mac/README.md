@@ -11,7 +11,7 @@ Simple dotfiles that I use on my Mac laptop
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install bat exa gh starship volta zsh
+brew install bat eza gh starship volta zsh
 ```
 
 - Install oh-my-zsh
@@ -37,7 +37,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 - bat
 - ca-certificates
 - deno
-- exa
+- eza
 - ffmpeg
 - gdbm
 - gh

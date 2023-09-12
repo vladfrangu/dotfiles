@@ -64,18 +64,27 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ "$(arch)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+# bun completions
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
+export DENO_ROOT="$HOME/.deno"
+export GOMODULES_PATH="$HOME/go/bin"
+export LIBPG="/opt/homebrew/opt/libpq/bin"
+export PATH="$LIBPG:$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
 
-# Bun completions
-[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
-
-# code-server
+# For code-server
 export EXTENSIONS_GALLERY='{"serviceUrl":"https://marketplace.visualstudio.com/_apis/public/gallery","cacheUrl":"https://vscode.blob.core.windows.net/gallery/index","itemUrl":"https://marketplace.visualstudio.com/items","controlUrl":"","recommendationsUrl":""}'
 
 # Initialize gcloud-sdk completions if installed
@@ -85,13 +94,13 @@ if [ "$(command -v gcloud)" ]; then
 fi
 
 # Replace ls
-if [ "$(command -v exa)" ]; then
+if [ "$(command -v eza)" ]; then
 	unalias -m 'll'
 	unalias -m 'l'
 	unalias -m 'la'
 	unalias -m 'ls'
-	alias ls='exa -G  --color auto --icons -a -s type'
-	alias ll='exa -l --color always --icons -a -s type'
+	alias ls='eza -G  --color auto --icons -a -s type'
+	alias ll='eza -l --color always --icons -a -s type'
 fi
 
 # Replace cat
