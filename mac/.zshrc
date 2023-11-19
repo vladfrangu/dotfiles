@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -64,6 +64,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# eval "$(/opt/homebrew/bin/brew shellenv)"
+
 if [ "$(arch)" = "arm64" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 else
@@ -73,9 +75,8 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 # bun completions
-[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
@@ -95,26 +96,26 @@ fi
 
 # Replace ls
 if [ "$(command -v eza)" ]; then
-	unalias -m 'll'
-	unalias -m 'l'
-	unalias -m 'la'
-	unalias -m 'ls'
-	alias ls='eza -G  --color auto --icons -a -s type'
-	alias ll='eza -l --color always --icons -a -s type'
+    unalias -m 'll'
+    unalias -m 'l'
+    unalias -m 'la'
+    unalias -m 'ls'
+    alias ls='eza -G  --color auto --icons -a -s type'
+    alias ll='eza -l --color always --icons -a -s type'
 fi
 
 # Replace cat
 if [ "$(command -v bat)" ]; then
-	unalias -m 'cat'
-	alias cat='bat --theme="Monokai Extended Bright"'
+  unalias -m 'cat'
+  alias cat='bat -pp --theme="Monokai Extended Bright"'
 fi
 
 # Load Autocompletions
 if type brew &>/dev/null; then
-	FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-	autoload -Uz compinit
-	compinit
+  autoload -Uz compinit
+  compinit
 fi
 
 # Initialize starship
@@ -122,7 +123,7 @@ eval "$(starship init zsh)"
 
 # Initialize pyenv if present
 if [ "$(command -v pyenv)" ]; then
-	eval "$(pyenv init -)"
+  eval "$(pyenv init -)"
 fi
 
 if [ "$(command -v github-copilot-cli)" ]; then
@@ -130,4 +131,4 @@ if [ "$(command -v github-copilot-cli)" ]; then
 fi
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
