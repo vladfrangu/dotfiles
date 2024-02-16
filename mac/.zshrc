@@ -130,5 +130,13 @@ if [ "$(command -v github-copilot-cli)" ]; then
 	eval "$(github-copilot-cli alias -- "$0")"
 fi
 
+# Replace cd
+if [ "$(command -v zoxide)" ]; then
+        eval "$(zoxide init zsh)"
+        unalias -m 'cd'
+        alias cd='z'
+        alias cdi='zi'
+fi
+
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
