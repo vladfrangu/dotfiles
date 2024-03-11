@@ -1,5 +1,5 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -50,15 +50,15 @@ zstyle ':omz:update' frequency 7
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git
-	encode64
-	sudo
-	volta
-	npm
-	yarn
-	pyenv
-	zsh-autosuggestions
-	zsh-syntax-highlighting
+  git
+  encode64
+  sudo
+  volta
+  npm
+  yarn
+  pyenv
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -83,15 +83,16 @@ export PYENV_ROOT="$HOME/.pyenv"
 export DENO_ROOT="$HOME/.deno"
 export GOMODULES_PATH="$HOME/go/bin"
 export LIBPG="/opt/homebrew/opt/libpq/bin"
-export PATH="$LIBPG:$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$PATH"
+export FOUNDRY_HOME="$HOME/.foundry"
+export PATH="$LIBPG:$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$FOUNDRY_HOME/bin:$PATH"
 
 # For code-server
 export EXTENSIONS_GALLERY='{"serviceUrl":"https://marketplace.visualstudio.com/_apis/public/gallery","cacheUrl":"https://vscode.blob.core.windows.net/gallery/index","itemUrl":"https://marketplace.visualstudio.com/items","controlUrl":"","recommendationsUrl":""}'
 
 # Initialize gcloud-sdk completions if installed
 if [ "$(command -v gcloud)" ]; then
-	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # Replace ls
@@ -106,16 +107,16 @@ fi
 
 # Replace cat
 if [ "$(command -v bat)" ]; then
-  unalias -m 'cat'
-  alias cat='bat -pp --theme="Monokai Extended Bright"'
+    unalias -m 'cat'
+    alias cat='bat -pp --theme="Monokai Extended Bright"'
 fi
 
 # Load Autocompletions
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-  autoload -Uz compinit
-  compinit
+    autoload -Uz compinit
+    compinit
 fi
 
 # Initialize starship
@@ -123,20 +124,20 @@ eval "$(starship init zsh)"
 
 # Initialize pyenv if present
 if [ "$(command -v pyenv)" ]; then
-  eval "$(pyenv init -)"
+    eval "$(pyenv init -)"
 fi
 
 if [ "$(command -v github-copilot-cli)" ]; then
-	eval "$(github-copilot-cli alias -- "$0")"
+    eval "$(github-copilot-cli alias -- "$0")"
 fi
 
 # Replace cd
 if [ "$(command -v zoxide)" ]; then
-        eval "$(zoxide init zsh)"
-        unalias -m 'cd'
-        alias cd='z'
-        alias cdi='zi'
+    eval "$(zoxide init zsh)"
+    unalias -m 'cd'
+    alias cd='z'
+    alias cdi='zi'
 fi
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
