@@ -139,5 +139,44 @@ if [ "$(command -v zoxide)" ]; then
     alias cdi='zi'
 fi
 
+# Taken from Favna's dotfiles, https://github.com/favware/zsh-git-enhanced/blob/main/zsh-git-enhanced.plugin.zsh#L442-L472, under the MIT license
+function git_main_branch() {
+    command git rev-parse --git-dir &>/dev/null || return
+    local ref
+    for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default,master}; do
+        if command git show-ref -q --verify $ref; then
+            echo ${ref:t}
+            return 0
+        fi
+    done
+
+    # If no main branch was found, fall back to master but return error
+    echo master
+    return 1
+}
+
+function git_develop_branch() {
+    command git rev-parse --git-dir &>/dev/null || return
+    local branch
+    for branch in dev devel develop development; do
+        if command git show-ref -q --verify refs/heads/$branch; then
+            echo $branch
+            return 0
+        fi
+    done
+
+    echo dev
+    return 1
+}
+
+function git-br-delete-useless() {
+    git branch --no-color | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | sed s/\'/\\\\\'/g | command xargs git branch --delete --force 2>/dev/null
+}
+
+function git-squash-diff() {
+    git rebase -i HEAD~$(git rev-list --count origin/$(git_main_branch)..$(git rev-parse --abbrev-ref HEAD))
+}
+# END
+
 # CodeWhisperer post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"

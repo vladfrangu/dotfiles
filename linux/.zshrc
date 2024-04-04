@@ -60,14 +60,15 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export CARGO_HOME="$HOME/.cargo"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:/usr/local/go/bin:$PATH"
+export PATH="$BUN_INSTALL/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:/usr/local/go/bin:$PATH"
 
 # Initialize pyenv if present
 if [ "$(command -v pyenv)" ]; then
-  eval "$(pyenv init -)"
+	eval "$(pyenv init -)"
 fi
 
 # Replace ls
@@ -82,8 +83,8 @@ fi
 
 # Replace cat
 if [ "$(command -v batcat)" ]; then
-  unalias -m 'cat'
-  alias cat='batcat --theme="Monokai Extended Bright"'
+	unalias -m 'cat'
+	alias cat='batcat -pp --theme="Monokai Extended Bright"'
 fi
 
 # Initialize starship
