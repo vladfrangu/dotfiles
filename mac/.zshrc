@@ -1,6 +1,5 @@
-# CodeWhisperer pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
-
+# Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -178,5 +177,31 @@ function git-squash-diff() {
 }
 # END
 
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
+function unfuck-vpn-old() {
+	sudo route delete default -ifp utun6
+	sudo route add default 192.168.1.1 0.0.0.0
+	sudo route add default 192.168.100.1 0.0.0.0
+}
+
+function unfuck-vpn() {
+    ROUTER=$(netstat -nr | grep default | grep 1 | awk '{print $2}' | head -1)
+
+    # Confirm the user connected to the vpn
+    echo "You are connected to $ROUTER"
+    echo -n "Do you want to unfuck the vpn? Confirm once you connected [y/N] "
+
+    read -q
+
+    echo
+
+    if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+        echo "Aborting..."
+        return
+    fi
+
+    sudo route delete default -ifp utun6
+    sudo route add default $ROUTER 0.0.0.0
+}
+
+# Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
