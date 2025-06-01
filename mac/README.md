@@ -3,7 +3,7 @@ Simple dotfiles that I use on my Mac laptop
 ## Requirements
 
 - brew
-- fig
+- amazon q
 
 ## Installation
 
@@ -78,7 +78,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 - hex-fiend
 - iterm2
 - itsycal
-- keybase
 - raycast
 - scroll-reverser
 - slack
@@ -89,9 +88,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 - JetBrains Toolbox (optional)
 - Docker
-- BetterDummy (optional)
 - TG Pro
 - Visual Studio Code & Visual Studio Code Insiders
+- Cursor
 - Discord clients
 - Insomnia Rest client
 - Notion
