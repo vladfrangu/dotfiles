@@ -1,5 +1,5 @@
-# Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -22,7 +22,6 @@ plugins=(
     volta
     npm
     yarn
-    pyenv
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -44,9 +43,6 @@ export VOLTA_HOME="$HOME/.volta"
 # cargo
 export CARGO_HOME="$HOME/.cargo"
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-
 # deno
 export DENO_ROOT="$HOME/.deno"
 
@@ -56,12 +52,18 @@ export GOMODULES_PATH="$HOME/go/bin"
 # libpq
 export LIBPG="/opt/homebrew/opt/libpq/bin"
 
+# openjdk
+export JAVA_HOME="/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+
 # foundry
 export FOUNDRY_HOME="$HOME/.foundry"
 
 # apify cli
 export APIFY_CLI_INSTALL="$HOME/.apify"
 export PATH="$APIFY_CLI_INSTALL/bin:$PATH"
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
 
 export PATH="$LIBPG:$BUN_INSTALL/bin:$GOMODULES_PATH:$DENO_ROOT/bin:$PYENV_ROOT/bin:$VOLTA_HOME/bin:$CARGO_HOME/bin:$FOUNDRY_HOME/bin:$PATH"
 export SLACK_DEVELOPER_MENU=true
@@ -82,6 +84,23 @@ fi
 # Alias cursor to c if it's installed
 if [ "$(command -v cursor)" ]; then
     alias c='cursor'
+fi
+
+# Alias claude to dangerously if it's installed
+if [ "$(command -v claude)" ]; then
+    alias claude='claude --dangerously-skip-permissions'
+fi
+
+if [ "$(command -v claudewho-apify)" ]; then
+    alias claudea='claudewho-apify --dangerously-skip-permissions'
+fi
+
+if [ "$(command -v claudewho-statespacelabs)" ]; then
+    alias claudes='claudewho-statespacelabs --dangerously-skip-permissions'
+fi
+
+if [ "$(command -v claude-codex)" ]; then
+    alias claudex='claude-codex --dangerously-skip-permissions'
 fi
 
 # Replace cat
@@ -107,7 +126,7 @@ if [ "$(command -v pyenv)" ]; then
 fi
 
 # Replace cd
-if [ "$(command -v zoxide)" ]; then
+if [[ "$(command -v zoxide)" && "$CLAUDECODE" != "1" ]]; then
     eval "$(zoxide init zsh)"
     unalias -m 'cd'
     alias cd='z'
@@ -179,5 +198,8 @@ function unfuck-vpn() {
     sudo route add default $ROUTER 0.0.0.0
 }
 
-# Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

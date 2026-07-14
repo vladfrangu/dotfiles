@@ -1,0 +1,26 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/vlad/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-07-13T16:46:00.597Z"
+  },
+  "custom-local": {
+    "source": {
+      "source": "directory",
+      "path": "/Users/vlad/.claude/plugins/custom-local"
+    },
+    "installLocation": "/Users/vlad/.claude/plugins/custom-local",
+    "lastUpdated": "2026-05-31T12:34:11.402Z"
+  },
+  "wakatime": {
+    "source": {
+      "source": "git",
+      "url": "https://github.com/wakatime/claude-code-wakatime.git"
+    },
+    "installLocation": "/Users/vlad/.claude/plugins/marketplaces/wakatime",
+    "lastUpdated": "2026-05-31T12:34:34.648Z"
+  }
+}

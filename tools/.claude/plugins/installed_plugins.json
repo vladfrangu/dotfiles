@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "plugins": {
+    "clangd-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/clangd-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-05T23:16:44.956Z",
+        "lastUpdated": "2026-02-05T23:16:44.956Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-25T00:52:02.047Z",
+        "lastUpdated": "2026-02-25T00:52:02.047Z",
+        "gitCommitSha": "99e11d95926936deb21c3fa29a098511573100d1"
+      }
+    ],
+    "claude-md-management@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-25T00:52:02.060Z",
+        "lastUpdated": "2026-02-25T00:52:02.060Z",
+        "gitCommitSha": "99e11d95926936deb21c3fa29a098511573100d1"
+      }
+    ],
+    "gopls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/gopls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-07T13:29:17.592Z",
+        "lastUpdated": "2026-03-07T13:29:17.592Z",
+        "gitCommitSha": "205b6e0b30366a969412d9aab7b99bea99d58db1"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-23T00:44:34.867Z",
+        "lastUpdated": "2026-07-13T16:46:00.646Z",
+        "gitCommitSha": "61c0597779bd2d670dcd4fbbf37c66aa19eb2ce6"
+      }
+    ],
+    "rust-analyzer-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/claude-plugins-official/rust-analyzer-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-25T14:05:24.269Z",
+        "lastUpdated": "2026-04-25T14:05:24.269Z"
+      }
+    ],
+    "thermo-nuclear-code-quality-review@custom-local": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/custom-local/thermo-nuclear-code-quality-review/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-25T19:45:57.361Z",
+        "lastUpdated": "2026-05-25T19:45:57.361Z"
+      }
+    ],
+    "claude-code-wakatime@wakatime": [
+      {
+        "scope": "user",
+        "installPath": "/Users/vlad/.claude/plugins/cache/wakatime/claude-code-wakatime/4.1.0",
+        "version": "4.1.0",
+        "installedAt": "2026-05-31T12:34:40.307Z",
+        "lastUpdated": "2026-05-31T12:34:40.307Z",
+        "gitCommitSha": "3915f4ec19d4fedf2a1a2a644f1138cd72e956da"
+      }
+    ]
+  }
+}

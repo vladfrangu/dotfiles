@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "cleanupPeriodDays": 365,
+  "env": {
+    "_ZO_DOCTOR": "0"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(rtk *)"
+    ],
+    "deny": [
+      "Read(*.env)",
+      "Bash(rm:*)"
+    ],
+    "ask": [
+      "Bash(gh pr create:*)",
+      "Bash(git commit:*)",
+      "Bash(curl:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "fable",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node ~/.claude/statusline.js"
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "thermo-nuclear-code-quality-review@custom-local": true,
+    "claude-code-wakatime@wakatime": true
+  },
+  "extraKnownMarketplaces": {
+    "custom-local": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/vlad/.claude/plugins/custom-local"
+      }
+    },
+    "wakatime": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/wakatime/claude-code-wakatime.git"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "fastModePerSessionOptIn": true,
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-daltonized",
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true
+}
