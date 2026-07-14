@@ -135,6 +135,8 @@ def render_config(models: list[str]) -> str:
             "litellm_settings:",
             "  master_key: os.environ/LITELLM_MASTER_KEY",
             "  drop_params: true",
+            "  callbacks:",
+            "    - rate_limit_callback.codex_rate_limit_callback",
             "",
         ]
     )

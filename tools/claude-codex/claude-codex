@@ -138,9 +138,26 @@ export CLAUDE_CODE_SUBAGENT_MODEL=gpt-5.6-sol
 export CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1
 export CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3
 export ENABLE_TOOL_SEARCH=false
+export CLAUDE_CODEX_RATE_LIMITS_FILE="$DATA_DIR/rate-limits.json"
+
+STATUSLINE_ARGS=()
+CLAUDE_SETTINGS_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+CLAUDE_SETTINGS_FILE="$CLAUDE_SETTINGS_DIR/settings.json"
+if [[ -r "$CLAUDE_SETTINGS_FILE" ]]; then
+  CLAUDE_CODEX_STATUSLINE_COMMAND="$(
+    python3 "$ROOT/statusline_adapter.py" --command "$CLAUDE_SETTINGS_FILE"
+  )"
+  if [[ -n "$CLAUDE_CODEX_STATUSLINE_COMMAND" ]]; then
+    export CLAUDE_CODEX_STATUSLINE_COMMAND
+    STATUSLINE_OVERRIDE="$(
+      python3 "$ROOT/statusline_adapter.py" --override "$CLAUDE_SETTINGS_FILE"
+    )"
+    STATUSLINE_ARGS=(--settings "$STATUSLINE_OVERRIDE")
+  fi
+fi
 
 cleanup_proxy() {
   stop_proxy >/dev/null 2>&1 || true
 }
 trap cleanup_proxy EXIT
-claude "$@"
+claude "${STATUSLINE_ARGS[@]}" "$@"

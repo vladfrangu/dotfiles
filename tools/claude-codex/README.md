@@ -14,6 +14,8 @@ claude-codex
 
 The proxy reuses Codex's existing ChatGPT OAuth session from `~/.codex/auth.json`; LiteLLM's separate device-code flow is disabled. Only that single auth file is mounted into the container, read-write, so a LiteLLM token refresh is written back in Codex's native nested format. The default launcher starts the proxy for the Claude session and stops it when Claude exits; Docker auto-restart is disabled. Do not run Codex and `claude-codex` concurrently because both may attempt to rotate the same refresh token. The local proxy key lives at `~/.config/claude-codex/master-key`.
 
+Codex quota windows are read from ChatGPT's read-only usage endpoint (or captured from upstream response headers when available) and written to `~/.local/share/claude-codex/rate-limits.json`. Usage reads are throttled to once every 30 seconds and reuse the model request's OAuth session. If `~/.claude/settings.json` configures a command-based status line, the launcher wraps that command for the session and injects the captured five-hour or weekly Codex windows into its normal `rate_limits` input. The settings file and original status-line command are not modified. Accounts can expose only one window, and the wrapper omits expired or unavailable windows rather than reporting them as zero.
+
 Docker is the default because it keeps LiteLLM's large Python dependency tree out of the host environment. The image is pinned to the signed upstream `v1.91.2` release, then receives the walkthrough's Anthropic content-block compatibility patch during the local build. The proxy publishes only on `127.0.0.1:4000`.
 
 ## Native `uv` fallback

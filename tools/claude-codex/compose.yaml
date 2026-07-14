@@ -11,6 +11,7 @@ services:
       CHATGPT_TOKEN_DIR: /data/chatgpt
       CHATGPT_AUTH_FILE: /codex-auth.json
       CHATGPT_DISABLE_DEVICE_AUTH: "true"
+      CLAUDE_CODEX_DATA_DIR: /data
       LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?Run ./install.sh first}
     volumes:
       - ./litellm-config.yaml:/app/config.yaml:ro
