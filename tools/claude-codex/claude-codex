@@ -1,0 +1,146 @@
+#!/bin/bash
+set -euo pipefail
+
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+ROOT="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/claude-codex"
+DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/claude-codex"
+KEY_FILE="$CONFIG_DIR/master-key"
+RUNTIME_FILE="$CONFIG_DIR/runtime"
+AUTH_FILE="$HOME/.codex/auth.json"
+CODEX_AUTH_FILE="$AUTH_FILE"
+export CODEX_AUTH_FILE
+PORT="${CLAUDE_CODEX_PORT:-4000}"
+PROXY_URL="http://127.0.0.1:$PORT"
+
+[[ -s "$KEY_FILE" ]] || { echo "Error: run $ROOT/install.sh first." >&2; exit 1; }
+[[ -s "$RUNTIME_FILE" ]] || { echo "Error: runtime selection is missing; rerun install.sh." >&2; exit 1; }
+LITELLM_MASTER_KEY="$(<"$KEY_FILE")"
+export LITELLM_MASTER_KEY
+export CLAUDE_CODEX_DATA_DIR="$DATA_DIR"
+RUNTIME="$(<"$RUNTIME_FILE")"
+
+compose() {
+  docker compose --project-directory "$ROOT" "$@"
+}
+
+healthy() {
+  curl --silent --fail --max-time 2 \
+    -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
+    "$PROXY_URL/health" >/dev/null
+}
+
+launch_proxy() {
+  if [[ "$RUNTIME" == "docker" ]]; then
+    compose up --detach proxy
+  elif [[ "$RUNTIME" == "native" ]]; then
+    mkdir -p "$DATA_DIR"
+    touch "$DATA_DIR/proxy.log" "$DATA_DIR/proxy.err"
+    CHATGPT_TOKEN_DIR="$DATA_DIR/chatgpt" \
+      CHATGPT_AUTH_FILE="$CODEX_AUTH_FILE" \
+      CHATGPT_DISABLE_DEVICE_AUTH=true \
+      nohup uv run --project "$ROOT" --frozen litellm \
+        --config "$ROOT/litellm-config.yaml" --host 127.0.0.1 --port "$PORT" \
+        >>"$DATA_DIR/proxy.log" 2>>"$DATA_DIR/proxy.err" &
+  else
+    echo "Error: unknown runtime '$RUNTIME'." >&2
+    exit 1
+  fi
+}
+
+wait_for_proxy() {
+  for _ in {1..60}; do
+    healthy && return
+    sleep 1
+  done
+  echo "Error: LiteLLM did not become healthy. Run 'claude-codex logs'." >&2
+  exit 1
+}
+
+login() {
+  if [[ ! -s "$AUTH_FILE" ]]; then
+    echo "Error: Codex OAuth is missing at $AUTH_FILE. Run 'codex login' first." >&2
+    exit 1
+  fi
+  if ! python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); t=d.get("tokens", {}); sys.exit(not (d.get("auth_mode") == "chatgpt" and all(t.get(k) for k in ("access_token", "refresh_token", "id_token"))))' "$AUTH_FILE"; then
+    echo "Error: $AUTH_FILE does not contain a complete ChatGPT OAuth session. Run 'codex login'." >&2
+    exit 1
+  fi
+}
+
+start_proxy() {
+  if healthy; then return; fi
+  login
+  if healthy; then return; fi
+  launch_proxy
+  wait_for_proxy
+}
+
+logs() {
+  if [[ "$RUNTIME" == "docker" ]]; then
+    if [[ "${1:-}" == "--follow" || "${1:-}" == "-f" ]]; then
+      compose logs --follow proxy
+    else
+      compose logs --tail 100 proxy
+    fi
+  else
+    if [[ "${1:-}" == "--follow" || "${1:-}" == "-f" ]]; then
+      tail -f "$DATA_DIR/proxy.log" "$DATA_DIR/proxy.err"
+    else
+      tail -n 100 "$DATA_DIR/proxy.log" "$DATA_DIR/proxy.err"
+    fi
+  fi
+}
+
+stop_proxy() {
+  if [[ "$RUNTIME" == "docker" ]]; then
+    compose stop proxy
+  else
+    pkill -f "litellm --config $ROOT/litellm-config.yaml" 2>/dev/null || true
+  fi
+}
+
+case "${1:-}" in
+  proxy-start) start_proxy; echo "LiteLLM is healthy at $PROXY_URL"; exit ;;
+  login) login; exit ;;
+  proxy-stop) stop_proxy; exit ;;
+  models) exec python3 "$ROOT/sync_models.py" --list ;;
+  models-sync)
+    python3 "$ROOT/sync_models.py"
+    stop_proxy
+    echo "LiteLLM stopped so the next launch picks up the refreshed model routes."
+    exit
+    ;;
+  status)
+    if healthy; then echo "LiteLLM is healthy at $PROXY_URL"; else echo "LiteLLM is stopped or unhealthy"; exit 1; fi
+    exit
+    ;;
+  logs) shift; logs "$@"; exit ;;
+esac
+
+command -v claude >/dev/null || { echo "Error: Claude Code is not installed." >&2; exit 1; }
+start_proxy
+
+export ANTHROPIC_BASE_URL="$PROXY_URL"
+export ANTHROPIC_AUTH_TOKEN="$LITELLM_MASTER_KEY"
+export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-gpt-5.6-sol}"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="${ANTHROPIC_DEFAULT_SONNET_MODEL:-gpt-5.6-terra}"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="${ANTHROPIC_DEFAULT_HAIKU_MODEL:-gpt-5.6-luna}"
+export ANTHROPIC_DEFAULT_OPUS_MODEL="${ANTHROPIC_DEFAULT_OPUS_MODEL:-gpt-5.6-sol}"
+export ANTHROPIC_DEFAULT_FABLE_MODEL="${ANTHROPIC_DEFAULT_FABLE_MODEL:-gpt-5.6-sol}"
+export CLAUDE_CODE_SUBAGENT_MODEL=gpt-5.6-sol
+export CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1
+export CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3
+export ENABLE_TOOL_SEARCH=false
+
+cleanup_proxy() {
+  stop_proxy >/dev/null 2>&1 || true
+}
+trap cleanup_proxy EXIT
+claude "$@"

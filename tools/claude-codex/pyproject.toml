@@ -1,0 +1,11 @@
+[project]
+name = "claude-codex-proxy"
+version = "0.1.0"
+description = "Local LiteLLM proxy for running Claude Code through a ChatGPT subscription"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "litellm[proxy]==1.91.2",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,37 @@
+services:
+  proxy:
+    build:
+      context: .
+    image: claude-codex-litellm:1.91.2
+    restart: "no"
+    ports:
+      - "127.0.0.1:4000:4000"
+    environment:
+      HOME: /data
+      CHATGPT_TOKEN_DIR: /data/chatgpt
+      CHATGPT_AUTH_FILE: /codex-auth.json
+      CHATGPT_DISABLE_DEVICE_AUTH: "true"
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?Run ./install.sh first}
+    volumes:
+      - ./litellm-config.yaml:/app/config.yaml:ro
+      - ${CLAUDE_CODEX_DATA_DIR:?Run ./install.sh first}:/data
+      - ${CODEX_AUTH_FILE:?Run `codex login` first}:/codex-auth.json
+    command:
+      - --config
+      - /app/config.yaml
+      - --host
+      - 0.0.0.0
+      - --port
+      - "4000"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python -c "import os,urllib.request;
+          r=urllib.request.Request('http://127.0.0.1:4000/health',
+          headers={'Authorization':'Bearer '+os.environ['LITELLM_MASTER_KEY']});
+          urllib.request.urlopen(r,timeout=5)"
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s

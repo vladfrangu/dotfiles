@@ -1,2 +1,7 @@
 # Remove anoying Mac file that git doesn't autoignore 
 .DS_Store
+
+# Local Python environments
+.venv/
+__pycache__/
+*.pyc
