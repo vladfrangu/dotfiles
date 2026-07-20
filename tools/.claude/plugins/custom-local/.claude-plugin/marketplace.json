@@ -4,23 +4,13 @@
   "description": "Locally installed custom skills and plugins",
   "owner": {
     "name": "vlad",
-    "email": "me@vladfrangu.dev"
+    "email": "vlad.frangu@apify.com"
   },
   "plugins": [
     {
-      "name": "thermo-nuclear-code-quality-review",
-      "source": "./skills/thermo-nuclear-code-quality-review",
-      "skills": "./",
-      "description": "Run an extremely strict maintainability review for abstraction quality, giant files, and spaghetti-condition growth. Use for a thermo-nuclear code quality review, thermonuclear review, deep code quality audit, or especially harsh maintainability review.",
-      "keywords": [
-        "code-review",
-        "maintainability",
-        "code-quality",
-        "refactoring",
-        "audit",
-        "thermonuclear"
-      ],
-      "category": "code-quality",
+      "name": "thermos",
+      "source": "./thermos",
+      "description": "Thermo-nuclear branch review: deep correctness and security audits plus harsh code-quality rubrics, parallel subagents, thermos orchestration, and optional take-the-wheel and FSD merge-ready flows.",
       "version": "1.0.0"
     }
   ]
