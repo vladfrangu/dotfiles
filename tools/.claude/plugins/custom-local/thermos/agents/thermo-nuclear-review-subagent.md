@@ -25,4 +25,4 @@ Do **not** spawn nested subagents unless the user or parent explicitly asks.
 
 ## Parent orchestration
 
-Typical flow: collect `git diff <base>...HEAD` output (default base `main`) and full contents of changed files (via Bash/Read or an `Explore` agent). Then invoke this agent with `subagent_type: "thermos:thermo-nuclear-review-subagent"` and a user prompt containing `### Git / diff output` and `### Changed file contents`.
+Typical flow: collect `git diff <base>...HEAD` output and full contents of changed files (default base `main`). Then invoke this agent with `subagent_type: "thermos:thermo-nuclear-review-subagent"` and a user prompt containing `### Git / diff output` and `### Changed file contents`.
