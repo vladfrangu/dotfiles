@@ -9,6 +9,19 @@ if ! command -v claude >/dev/null 2>&1; then
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 
+if ! command -v claudewho >/dev/null 2>&1; then
+  claudewho_dir="$HOME/Development/claudewho"
+
+  if [[ ! -d "$claudewho_dir/.git" ]]; then
+    mkdir -p "$HOME/Development"
+    git clone https://github.com/frisble/claudewho.git "$claudewho_dir"
+  fi
+
+  chmod +x "$claudewho_dir/bin/claudewho"
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$claudewho_dir/bin/claudewho" "$HOME/.local/bin/claudewho"
+fi
+
 # copy only git-tracked files so local runtime state (plugin repos, data, caches) is skipped
 count=0
 for dir in .claude .agents .codex; do
